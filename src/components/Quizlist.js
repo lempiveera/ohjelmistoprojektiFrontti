@@ -22,8 +22,9 @@ function Quizlist() {
     console.log(quizzes)
   }
 
-  const addAnswer = (url, addAnswer) => {
-    fetch(url, {
+
+  const addAnswer = (addAnswer) => {
+    fetch('https://kyselygeneraattorirest.herokuapp.com/answers', {
       method: 'PUT',
       body: JSON.stringify(addAnswer),
       headers: { 'Content-type': 'application/json' }
@@ -33,14 +34,14 @@ function Quizlist() {
   }
 
   const columns = [
-    { field: 'title', width: 400, sortable: true, filter: true },
+    { field: 'title', width: 600, sortable: true, filter: true },
     {
       headerName: '',
       field: 'id',
       width: 200,
       cellRendererFramework: params =>
         <AddAnswer
-          link={`https://kyselygeneraattorirest.herokuapp.com/quizzes/${params.value}`}
+          link='https://kyselygeneraattorirest.herokuapp.com/getQuestionsFromQuiz/1'
           quiz={params.data} addAnswer={addAnswer}
         />
     }
@@ -49,7 +50,7 @@ function Quizlist() {
 
   return (
     <div>
-        <div className="ag-theme-material" style={{ height: 400, width: '90%', margin: 'auto' }}>
+        <div className="ag-theme-material" style={{ height: 900, width: '90%', margin: 'auto' }}>
           <AgGridReact
             rowData={quizzes}
             columnDefs={columns}
@@ -59,8 +60,6 @@ function Quizlist() {
             suppressCellSelection={true}
           />
       </div>
-
-
     </div>
   );
 }
